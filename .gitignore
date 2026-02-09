@@ -1,0 +1,46 @@
+# --- Python & Environment ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# --- Django Specific ---
+db.sqlite3
+db.sqlite3-journal
+media/
+# We ignore the static root because Jenkins/Collectstatic will regenerate it
+static/
+staticfiles/
+
+# --- Secrets & Jenkins Env ---
+# DO NOT commit the actual .env file. 
+# Jenkins should inject these via "Credentials Binding" or a global .env
+.env
+local_settings.py
+secrets.json
+
+# --- Jenkins & CI/CD Artifacts ---
+# Ignore build metadata and test reports generated during the Jenkins pipeline
+.pytest_cache/
+.coverage
+htmlcov/
+nosetests.xml
+coverage.xml
+*.lcov
+reports/
+*.log
+build/
+dist/
+
+# --- IDEs & OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Optional: Documentation ---
+# If your build generates docs (Sphinx/MkDocs), ignore the output
+site/
+_build/
