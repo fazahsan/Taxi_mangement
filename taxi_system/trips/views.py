@@ -71,6 +71,7 @@ def end_trip(request, trip_id):
 def trip_history(request):
     conductor = get_object_or_404(Driver, usario=request.user)
     trips = Trip.objects.filter(conductor=conductor).order_by('-hora_inicio')
-    return render(request, 'trips/history.html', {'trips': trips})
+    total_earnings = trips.aggregate(Sum('dinero'))['dinero__sum'] or 0
+    return render(request, 'trips/history.html', {'trips': trips, 'total_earnings': total_earnings})
 
 
