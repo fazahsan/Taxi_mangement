@@ -7,7 +7,7 @@ class Trip(models.Model):
     conductor=models.ForeignKey(Driver,on_delete=models.CASCADE)
     lugar_de_recogida=models.CharField(max_length=50)
     destino=models.CharField(max_length=50)
-    hora_inicio=models.DateTimeField(auto_now_add=True)
+    hora_inicio=models.DateTimeField()
     hora_final=models.DateTimeField(null=True,blank=True)
     distancia=models.FloatField(null=True,blank=True)
     dinero=models.DecimalField(max_digits=8,decimal_places=2,null=True,blank=True)

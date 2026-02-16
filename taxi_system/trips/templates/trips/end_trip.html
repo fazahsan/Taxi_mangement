@@ -1,0 +1,6 @@
+<h2>End Trip</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">End Trip</button>
+</form>

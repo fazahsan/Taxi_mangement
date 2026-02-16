@@ -1,0 +1,14 @@
+<h2>Driver Dashboard</h2>
+
+<p>Total Earnings Today: €{{ total_earnings }}</p>
+<p>Trips Today: {{ today_trips }}</p>
+
+{% if active_trip %}
+    <p>Trip Ongoing</p>
+    <a href="{% url 'end_trip' active_trip.id %}">End Trip</a>
+{% else %}
+    <a href="{% url 'start_trip' %}">Start New Trip</a>
+{% endif %}
+
+<br><br>
+<a href="{% url 'trip_history' %}">Trip History</a>

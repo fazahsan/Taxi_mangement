@@ -1,0 +1,19 @@
+<h2>Trip History</h2>
+
+<table border="1">
+<tr>
+    <th>Date</th>
+    <th>From</th>
+    <th>To</th>
+    <th>Fare</th>
+</tr>
+
+{% for trip in trips %}
+<tr>
+    <td>{{ trip.hora_inicio }}</td>
+    <td>{{ trip.lugar_de_recogida }}</td>
+    <td>{{ trip.destino }}</td>
+    <td>€{{ trip.dinero }}</td>
+</tr>
+{% endfor %}
+</table>
