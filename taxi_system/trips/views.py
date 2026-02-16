@@ -35,7 +35,7 @@ def start_trip(request):
     conductor = get_object_or_404(Driver, usario=request.user)
 
     if Trip.objects.filter(conductor=conductor, estatuto='en curso').exists():
-        return redirect('dashboard')
+        return redirect('dashbord')
 
     if request.method == 'POST':
         form = StartTripForm(request.POST)
@@ -44,7 +44,7 @@ def start_trip(request):
             trip.conductor = conductor
             trip.estatuto = 'en curso'
             trip.save()
-            return redirect('dashboard')
+            return redirect('dashbord')
     else:
         form = StartTripForm()
 
@@ -61,7 +61,7 @@ def end_trip(request, trip_id):
             trip.hora_fin = timezone.now()
             trip.estatuto = 'completado'
             trip.save()
-            return redirect('dashboard')
+            return redirect('dashbord')
     else:
         form = EndTripForm(instance=trip)
 
