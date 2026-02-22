@@ -1,0 +1,7 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('register/', views.driver_register, name='driver_register'),
+    
+]

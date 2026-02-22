@@ -1,0 +1,40 @@
+<div class="container mt-4">
+    <h3>Driver Registration</h3>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label>Usuario</label>
+            {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+            <label>Password</label>
+            {{ form.password }}
+        </div>
+
+        <div class="mb-3">
+            <label>Telefono</label>
+            {{ form.telefono }}
+        </div>
+
+        <div class="mb-3">
+            <label>No Licencia</label>
+            {{ form.no_licencia }}
+        </div>
+
+        <div class="mb-3">
+            <label>Matricula</label>
+            {{ form.matricula }}
+        </div>
+
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+
+    {% if form.errors %}
+    <div class="alert alert-danger mt-3">
+        {{ form.errors }}
+    </div>
+    {% endif %}
+</div>

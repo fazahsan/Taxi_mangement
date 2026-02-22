@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 from django.db.models import Sum
 
@@ -21,7 +22,7 @@ def dashbord(request):
     total_earnings = today_trips.aggregate(Sum('dinero'))['dinero__sum'] or 0
     active_trip = Trip.objects.filter(
         conductor=conductor,
-        estatuto='en curso'
+        estatuto='encurso'
     ).first()
 
     return render(request, 'trips/dashboard.html', {
@@ -42,7 +43,7 @@ def start_trip(request):
         if form.is_valid():
             trip = form.save(commit=False)
             trip.conductor = conductor
-            trip.estatuto = 'en curso'
+            trip.estatuto = 'encurso'
             trip.save()
             return redirect('dashbord')
     else:
@@ -52,7 +53,7 @@ def start_trip(request):
 # End Trip
 @login_required
 def end_trip(request, trip_id):
-    trip = get_object_or_404(Trip, id=trip_id, estatuto='en curso')
+    trip = get_object_or_404(Trip, id=trip_id, estatuto='encurso')
 
     if request.method == 'POST':
         form = EndTripForm(request.POST, instance=trip)
@@ -73,5 +74,31 @@ def trip_history(request):
     trips = Trip.objects.filter(conductor=conductor).order_by('-hora_inicio')
     total_earnings = trips.aggregate(Sum('dinero'))['dinero__sum'] or 0
     return render(request, 'trips/history.html', {'trips': trips, 'total_earnings': total_earnings})
+def login_view(request):
+    message = ""
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            try:
+                driver = Driver.objects.get(usario=user)
+
+                if driver.Activado:
+                    login(request, user)
+                    return redirect('dashbord')
+                else:
+                    message = "Conductor no esta activado"
+            except Driver.DoesNotExist:
+                message = "Conductor no encontrado"
+                return redirect('driver_register')
+        else:
+            message = "Credenciales inválidas"
+            return redirect('driver_register')
+
+    return render(request, "trips/login.html", {"message": message})
 
 
